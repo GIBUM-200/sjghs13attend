@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>학교 자율학습 출석부</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 우편번호 API 스크립트는 제거되었습니다. -->
+  <style>
+    /* 기본 스타일 */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    /* 상단 배너 */
+    .header-banner {
+      text-align: center;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 10px 0;
+    }
+    .header-banner img {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+    }
+    /* 컨테이너 */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    form div {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    select,
+    button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    /* 추가 입력 필드 (기타 선택 시 보임) */
+    .other-input {
+      display: none;
+      margin-top: 5px;
+      padding: 8px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      .container {
+        max-width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 배너 이미지 -->
+  <div class="header-banner">
+    <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F210B7C4A575132B431" alt="배너 이미지">
+  </div>
+  
+  <div class="container">
+    <h1>학교 자율학습 출석부</h1>
+    <!-- 학생 정보 입력 폼 -->
+    <form id="attendanceForm">
+      <div>
+        <label for="studentId">학번 (예: 1234)</label>
+        <!-- 학번은 4자리 숫자만 입력되도록 -->
+        <input type="text" id="studentId" name="studentId" pattern="^\d{4}$" maxlength="4" required>
+      </div>
+      <div>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <!-- 8교시 자습 장소 -->
+      <div>
+        <label for="period8">8교시 자습 장소</label>
+        <select id="period8" name="period8" required>
+          <option value="">선택하세요</option>
+          <option value="교실">교실</option>
+          <option value="진로활동실">진로활동실</option>
+          <option value="아고라(교무실 옆)">아고라(교무실 옆)</option>
+          <option value="아고라(3~4반 사이)">아고라(3~4반 사이)</option>
+          <option value="아고라(강의실 1옆)">아고라(강의실 1옆)</option>
+          <option value="시청각실">시청각실</option>
+          <option value="지성의 계단">지성의 계단</option>
+          <option value="과학실">과학실</option>
+          <option value="무한상상실">무한상상실</option>
+          <option value="외출">외출</option>
+          <option value="외박">외박</option>
+          <option value="기타">기타</option>
+        </select>
+        <input type="text" id="otherPeriod8" name="otherPeriod8" class="other-input" placeholder="예: 교무실(상담)">
+      </div>
+      <!-- 9교시 자습 장소 -->
+      <div>
+        <label for="period9">9교시 자습 장소</label>
+        <select id="period9" name="period9" required>
+          <option value="">선택하세요</option>
+          <option value="교실">교실</option>
+          <option value="진로활동실">진로활동실</option>
+          <option value="아고라(교무실 옆)">아고라(교무실 옆)</option>
+          <option value="아고라(3~4반 사이)">아고라(3~4반 사이)</option>
+          <option value="아고라(강의실 1옆)">아고라(강의실 1옆)</option>
+          <option value="시청각실">시청각실</option>
+          <option value="지성의 계단">지성의 계단</option>
+          <option value="과학실">과학실</option>
+          <option value="무한상상실">무한상상실</option>
+          <option value="외출">외출</option>
+          <option value="외박">외박</option>
+          <option value="기타">기타</option>
+        </select>
+        <input type="text" id="otherPeriod9" name="otherPeriod9" class="other-input" placeholder="예: 교무실(상담)">
+      </div>
+      <!-- 10교시 자습 장소 -->
+      <div>
+        <label for="period10">10교시 자습 장소</label>
+        <select id="period10" name="period10" required>
+          <option value="">선택하세요</option>
+          <option value="교실">교실</option>
+          <option value="진로활동실">진로활동실</option>
+          <option value="아고라(교무실 옆)">아고라(교무실 옆)</option>
+          <option value="아고라(3~4반 사이)">아고라(3~4반 사이)</option>
+          <option value="아고라(강의실 1옆)">아고라(강의실 1옆)</option>
+          <option value="시청각실">시청각실</option>
+          <option value="지성의 계단">지성의 계단</option>
+          <option value="과학실">과학실</option>
+          <option value="무한상상실">무한상상실</option>
+          <option value="외출">외출</option>
+          <option value="외박">외박</option>
+          <option value="기타">기타</option>
+        </select>
+        <input type="text" id="otherPeriod10" name="otherPeriod10" class="other-input" placeholder="예: 교무실(상담)">
+      </div>
+      <!-- 11교시 자습 장소 -->
+      <div>
+        <label for="period11">11교시 자습 장소</label>
+        <select id="period11" name="period11" required>
+          <option value="">선택하세요</option>
+          <option value="교실">교실</option>
+          <option value="진로활동실">진로활동실</option>
+          <option value="아고라(교무실 옆)">아고라(교무실 옆)</option>
+          <option value="아고라(3~4반 사이)">아고라(3~4반 사이)</option>
+          <option value="아고라(강의실 1옆)">아고라(강의실 1옆)</option>
+          <option value="시청각실">시청각실</option>
+          <option value="지성의 계단">지성의 계단</option>
+          <option value="과학실">과학실</option>
+          <option value="무한상상실">무한상상실</option>
+          <option value="외출">외출</option>
+          <option value="외박">외박</option>
+          <option value="기타">기타</option>
+        </select>
+        <input type="text" id="otherPeriod11" name="otherPeriod11" class="other-input" placeholder="예: 교무실(상담)">
+      </div>
+      
+      <!-- 제출 버튼 (미리보기 없이 바로 제출) -->
+      <button type="submit">제출</button>
+    </form>
+  </div>
+
+  <script>
+    // 선택 시 "기타"인 경우, 추가 입력란을 보이도록 처리 (예시로 placeholder가 이미 지정됨)
+    function toggleOtherInput(selectId, otherInputId) {
+      const selectElem = document.getElementById(selectId);
+      const otherInputElem = document.getElementById(otherInputId);
+      if (selectElem.value === "기타") {
+        otherInputElem.style.display = "block";
+      } else {
+        otherInputElem.style.display = "none";
+        otherInputElem.value = ""; // 값 초기화
+      }
+    }
+    
+    // 각 교시의 드롭다운 변경 이벤트 리스너
+    document.getElementById("period8").addEventListener("change", function() {
+      toggleOtherInput("period8", "otherPeriod8");
+    });
+    document.getElementById("period9").addEventListener("change", function() {
+      toggleOtherInput("period9", "otherPeriod9");
+    });
+    document.getElementById("period10").addEventListener("change", function() {
+      toggleOtherInput("period10", "otherPeriod10");
+    });
+    document.getElementById("period11").addEventListener("change", function() {
+      toggleOtherInput("period11", "otherPeriod11");
+    });
+    
+    // 폼 제출 이벤트 처리: 입력값을 서버로 전송
+    document.getElementById("attendanceForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const data = {
+        studentId: document.getElementById("studentId").value,
+        name: document.getElementById("name").value,
+        period8: document.getElementById("period8").value === "기타" ? document.getElementById("otherPeriod8").value : document.getElementById("period8").value,
+        period9: document.getElementById("period9").value === "기타" ? document.getElementById("otherPeriod9").value : document.getElementById("period9").value,
+        period10: document.getElementById("period10").value === "기타" ? document.getElementById("otherPeriod10").value : document.getElementById("period10").value,
+        period11: document.getElementById("period11").value === "기타" ? document.getElementById("otherPeriod11").value : document.getElementById("period11").value
+      };
+      
+      // 실제로 배포할 Apps Script 웹앱 URL로 변경
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwh8g82-SIxzGzY0SZYyqG53K3PCNQu5895y1IlhB6axgzyh5Bw1q19Ll_ts3vItolg/exec";
+      
+      fetch(scriptURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      })
+      .then(() => {
+        alert("제출되었습니다!");
+        this.reset();
+        // 추가 입력란 모두 숨기기
+        document.getElementById("otherPeriod8").style.display = "none";
+        document.getElementById("otherPeriod9").style.display = "none";
+        document.getElementById("otherPeriod10").style.display = "none";
+        document.getElementById("otherPeriod11").style.display = "none";
+      })
+      .catch(err => {
+        console.error(err);
+        alert("제출 중 오류가 발생했습니다.");
+      });
+    });
+  </script>
+</body>
+</html>
